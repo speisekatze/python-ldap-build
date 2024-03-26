@@ -8,16 +8,21 @@ env:
   OPENLDAP_VER: openldap-2.4.59
   PYTHONLDAP_VER: python-ldap-3.4.4
   CIBW_TEST_COMMAND: python -c"import ldap;print(ldap.__version__)"
-  CIBW_SKIP: "pp* cp36*"
+  CIBW_SKIP: 'pp* cp36*'
   MSBUILDTREATHIGHERTOOLSVERSIONASCURRENT: 1
 
 jobs:
   build_amd64:
     name: Build AMD64 wheels
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os[0] }}
     strategy:
       matrix:
-        os: [windows-2022]
+        os:
+          - [windows-2022, win_amd64]
+        python:
+          - cp310
+          - cp311
+          - cp312
     env:
       VS_PLATFORM: x64
       OPENSSL_CONFIG: VC-WIN64A-masm
@@ -35,18 +40,24 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v2.16.2
+      - uses: pypa/cibuildwheel@v2.17.0
         env:
-          CIBW_ARCHS_WINDOWS: AMD64
+          CIBW_ARCHS: AMD64
+          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
       - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl
   build_x86:
     name: Build x86 wheels
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os[0] }}
     strategy:
       matrix:
-        os: [windows-2022]
+        os:
+          - [windows-2022, win32]
+        python:
+          - cp310
+          - cp311
+          - cp312
     env:
       VS_PLATFORM: Win32
       OPENSSL_CONFIG: VC-WIN32
@@ -65,9 +76,10 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v2.16.2
+      - uses: pypa/cibuildwheel@v2.17.0
         env:
-          CIBW_ARCHS_WINDOWS: x86
+          CIBW_ARCHS: x86
+          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
       - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl
