@@ -18,23 +18,25 @@ if errorlevel 1 exit /B 1
 cd %OPENSSL_VER%
 if errorlevel 1 exit /B 1
 
-perl Configure %OPENSSL_CONFIG% no-shared no-makedepend no-zlib --prefix=%~dp0 --openssldir=openssl
+perl Configure %OPENSSL_CONFIG% no-shared no-legacy no-makedepend no-zlib --prefix=%~dp0 --openssldir=openssl
 if errorlevel 1 exit /B 1
 
 perl configdata.pm --dump
 if errorlevel 1 exit /B 1
 
-nmake /nologo build_all_generated
+@REM nmake /nologo build_sw
+nmake /nologo
 if errorlevel 1 exit /B 1
 
-nmake /nologo PERL=no-perl
+@REM nmake /nologo PERL=no-perl
+@REM if errorlevel 1 exit /B 1
+
+@REM nmake /nologo install_sw
+nmake /nologo install
 if errorlevel 1 exit /B 1
 
-nmake /nologo install_sw
-if errorlevel 1 exit /B 1
-
-nmake /nologo install_ssldirs
-if errorlevel 1 exit /B 1
+@REM nmake /nologo install_ssldirs
+@REM if errorlevel 1 exit /B 1
 
 cd ..
 
