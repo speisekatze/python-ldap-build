@@ -44,8 +44,9 @@ jobs:
         env:
           CIBW_ARCHS: AMD64
           CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
+          name: wheels
           path: ./wheelhouse/*.whl
   build_x86:
     name: Build x86 wheels
@@ -80,9 +81,33 @@ jobs:
         env:
           CIBW_ARCHS: x86
           CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
+          name: wheels
           path: ./wheelhouse/*.whl
+  upload_assets:
+    name: Upload release assets
+    runs-on: ubuntu-latest
+    needs:
+      - build_amd64
+      - build_x86
+      # - build_arm64
+    steps:
+      - name: Generate release name
+        id: release-name
+        run: printf 'RELEASE_NAME=%s\n' "$(date +%Y%m%d-%H%M%S)" >"GITHUB_OUTPUT"
+      - name: Fetch assets
+        id: fetch-assets
+        uses: actions/download-artifact@v4
+        with:
+          name: wheels
+      - name: Upload release assets
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifactErrorsFailBuild: true
+          name: ${{ steps.release-name.outputs.RELEASE_NAME }}
+          artifacts: ${{ steps.fetch-assets.outputs.download-path }}/*.whl
   # ARM64 wheel is broken
   # build_arm64:
   #  name: Build ARM64 wheels
