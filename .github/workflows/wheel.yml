@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  OPENSSL_VER: openssl-1.1.1w
+  OPENSSL_VER: openssl-3.2.1
   OPENLDAP_VER: openldap-2.4.59
   PYTHONLDAP_VER: python-ldap-3.4.4
   CIBW_TEST_COMMAND: python -c"import ldap;print(ldap.__version__)"

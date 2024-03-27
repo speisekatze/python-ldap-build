@@ -2,7 +2,7 @@ diff --git a/Configurations/10-main.conf b/Configurations/10-main.conf
 index f815a09b..320e09aa 100644
 --- a/Configurations/10-main.conf
 +++ b/Configurations/10-main.conf
-@@ -1281,7 +1281,7 @@ my %targets = (
+@@ -1516,7 +1516,7 @@ my %targets = (
                                         })),
          defines          => add(picker(default => [], # works as type cast
                                         debug   => [ "DEBUG", "_DEBUG" ])),
@@ -11,7 +11,7 @@ index f815a09b..320e09aa 100644
          # Following might/should appears controversial, i.e. defining
          # /MDd without evaluating $disabled{shared}. It works in
          # non-shared build because static library is compiled with /Zl
-@@ -1294,7 +1294,7 @@ my %targets = (
+@@ -1529,7 +1529,7 @@ my %targets = (
          # prefer [non-debug] openssl.exe to be free from Micorosoft RTL
          # redistributable.
          bin_cflags       => add(picker(debug   => "/MDd",
@@ -20,7 +20,7 @@ index f815a09b..320e09aa 100644
                                        )),
          bin_lflags       => add("/subsystem:console /opt:ref"),
          ex_libs          => add(sub {
-@@ -1363,7 +1363,7 @@ my %targets = (
+@@ -1597,7 +1597,7 @@ my %targets = (
              combine('/GF /Gy',
                      sub { vc_wince_info()->{cflags}; },
                      sub { `cl 2>&1` =~ /Version ([0-9]+)\./ && $1>=14
