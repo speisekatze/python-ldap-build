@@ -8,7 +8,6 @@ env:
   OPENLDAP_VER: openldap-2.4.59
   PYTHONLDAP_VER: python-ldap-3.4.4
   CIBW_TEST_COMMAND: python -c"import ldap;print(ldap.__version__)"
-  CIBW_SKIP: 'pp* cp36*'
   MSBUILDTREATHIGHERTOOLSVERSIONASCURRENT: 1
 
 jobs:
@@ -107,6 +106,7 @@ jobs:
           allowUpdates: true
           artifactErrorsFailBuild: true
           name: ${{ steps.release-name.outputs.RELEASE_NAME }}
+          tag: main
           artifacts: ${{ steps.fetch-assets.outputs.download-path }}/*.whl
   # ARM64 wheel is broken
   # build_arm64:
