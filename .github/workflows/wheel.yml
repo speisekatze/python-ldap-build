@@ -46,7 +46,7 @@ jobs:
           CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
       - uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: ${{ matrix.python }}-${{ matrix.os[1] }}-wheel
           path: ./wheelhouse/*.whl
   build_x86:
     name: Build x86 wheels
@@ -83,7 +83,7 @@ jobs:
           CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
       - uses: actions/upload-artifact@v4
         with:
-          name: wheels
+          name: ${{ matrix.python }}-${{ matrix.os[1] }}-wheel
           path: ./wheelhouse/*.whl
   upload_assets:
     name: Upload release assets
@@ -100,7 +100,7 @@ jobs:
         id: fetch-assets
         uses: actions/download-artifact@v4
         with:
-          name: wheels
+          merge-multiple: true
       - name: Upload release assets
         uses: ncipollo/release-action@v1
         with:
