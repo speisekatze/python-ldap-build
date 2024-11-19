@@ -4033,7 +4033,7 @@ index 0000000000..b5e742392c
 +    <ClCompile Include="..\..\libraries\libldap\passwd.c" />
 +    <ClCompile Include="..\..\libraries\libldap\ppolicy.c" />
 +    <ClCompile Include="..\..\libraries\libldap\print.c" />
-+    <ClCompile Include="..\..\libraries\libldap\pserchctrl.c" />
++    <ClCompile Include="..\..\libraries\libldap\psearchctrl.c" />
 +    <ClCompile Include="..\..\libraries\libldap\rdwr.c" />
 +    <ClCompile Include="..\..\libraries\libldap\references.c" />
 +    <ClCompile Include="..\..\libraries\libldap\request.c" />
