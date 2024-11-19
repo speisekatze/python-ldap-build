@@ -1691,11 +1691,11 @@ index c080b62..32c42c2 100644
  		if ( isprint( (unsigned char) data[i] )) {
 diff --git a/win32/vc17/liblber.sln b/win32/vc17/liblber.sln
 new file mode 100644
-index 0000000..44904af
+index 0000000000..78c7f5a9ea
 --- /dev/null
 +++ b/win32/vc17/liblber.sln
-@@ -0,0 +1,149 @@
-+﻿
+@@ -0,0 +1,147 @@
++´╗┐
 +Microsoft Visual Studio Solution File, Format Version 12.00
 +# Visual Studio Version 17
 +VisualStudioVersion = 17.4.33027.239
@@ -1703,8 +1703,6 @@ index 0000000..44904af
 +Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "liblber", "liblber.vcxproj", "{EB28A824-77BC-4FC3-B510-E703191B8E21}"
 +EndProject
 +Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libldap", "libldap.vcxproj", "{8B81DD20-B26C-40A6-8328-A0F9ECC7D726}"
-+EndProject
-+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libldap_r", "libldap_r.vcxproj", "{D1D63406-97FB-43D9-A022-6B19B19A52EA}"
 +EndProject
 +Global
 +	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1846,11 +1844,11 @@ index 0000000..44904af
 +EndGlobal
 diff --git a/win32/vc17/liblber.vcxproj b/win32/vc17/liblber.vcxproj
 new file mode 100644
-index 0000000..7adce7e
+index 0000000000..8788cd838a
 --- /dev/null
 +++ b/win32/vc17/liblber.vcxproj
-@@ -0,0 +1,1279 @@
-+﻿<?xml version="1.0" encoding="utf-8"?>
+@@ -0,0 +1,1286 @@
++´╗┐<?xml version="1.0" encoding="utf-8"?>
 +<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup Label="ProjectConfigurations">
 +    <ProjectConfiguration Include="Debug|ARM64">
@@ -2142,6 +2140,9 @@ index 0000000..7adce7e
 +    <IntDir Condition="'$(Configuration)|$(Platform)'=='DLL Debug|ARM64'">$(Platform)\$(Configuration)\</IntDir>
 +    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='DLL Debug|x64'">false</LinkIncremental>
 +    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='DLL Debug|ARM64'">false</LinkIncremental>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <IncludePath>C:\Users\Administrator.LDE\Documents\openldap\openldap\include;$(IncludePath)</IncludePath>
 +  </PropertyGroup>
 +  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLL Release|Win32'">
 +    <BuildLog>
@@ -3124,6 +3125,10 @@ index 0000000..7adce7e
 +    <ClInclude Include="..\..\include\lber.h" />
 +    <ClInclude Include="..\..\include\lber_pvt.h" />
 +    <ClInclude Include="..\..\include\lber_types.h" />
++    <ClInclude Include="resource.h" />
++  </ItemGroup>
++  <ItemGroup>
++    <ResourceCompile Include="liblber.rc" />
 +  </ItemGroup>
 +  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
 +  <ImportGroup Label="ExtensionTargets">
@@ -3132,11 +3137,11 @@ index 0000000..7adce7e
 \ No newline at end of file
 diff --git a/win32/vc17/libldap.vcxproj b/win32/vc17/libldap.vcxproj
 new file mode 100644
-index 0000000..7500a86
+index 0000000000..66face09da
 --- /dev/null
 +++ b/win32/vc17/libldap.vcxproj
-@@ -0,0 +1,927 @@
-+﻿<?xml version="1.0" encoding="utf-8"?>
+@@ -0,0 +1,943 @@
++´╗┐<?xml version="1.0" encoding="utf-8"?>
 +<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup Label="ProjectConfigurations">
 +    <ProjectConfiguration Include="Debug|ARM64">
@@ -3988,9 +3993,11 @@ index 0000000..7500a86
 +  </ItemDefinitionGroup>
 +  <ItemGroup>
 +    <ClCompile Include="..\..\libraries\libldap\abandon.c" />
++    <ClCompile Include="..\..\libraries\libldap\account_usability.c" />
 +    <ClCompile Include="..\..\libraries\libldap\add.c" />
 +    <ClCompile Include="..\..\libraries\libldap\addentry.c" />
 +    <ClCompile Include="..\..\libraries\libldap\assertion.c" />
++    <ClCompile Include="..\..\libraries\libldap\avl.c" />
 +    <ClCompile Include="..\..\libraries\libldap\bind.c" />
 +    <ClCompile Include="..\..\libraries\libldap\cancel.c" />
 +    <ClCompile Include="..\..\libraries\libldap\charray.c" />
@@ -4010,13 +4017,15 @@ index 0000000..7500a86
 +    <ClCompile Include="..\..\libraries\libldap\getdn.c" />
 +    <ClCompile Include="..\..\libraries\libldap\getentry.c" />
 +    <ClCompile Include="..\..\libraries\libldap\getvalues.c" />
-+    <ClCompile Include="..\..\libraries\libldap\gssapi.c" />
++    <ClCompile Include="..\..\libraries\libldap\lbase64.c" />
 +    <ClCompile Include="..\..\libraries\libldap\init.c" />
 +    <ClCompile Include="..\..\libraries\libldap\ldap_sync.c" />
 +    <ClCompile Include="..\..\libraries\libldap\ldif.c" />
++    <ClCompile Include="..\..\libraries\libldap\ldifutil.c" />
 +    <ClCompile Include="..\..\libraries\libldap\messages.c" />
 +    <ClCompile Include="..\..\libraries\libldap\modify.c" />
 +    <ClCompile Include="..\..\libraries\libldap\modrdn.c" />
++    <ClCompile Include="..\..\libraries\libldap\msctrl.c" />
 +    <ClCompile Include="..\..\libraries\libldap\open.c" />
 +    <ClCompile Include="..\..\libraries\libldap\options.c" />
 +    <ClCompile Include="..\..\libraries\libldap\os-ip.c" />
@@ -4025,9 +4034,12 @@ index 0000000..7500a86
 +    <ClCompile Include="..\..\libraries\libldap\passwd.c" />
 +    <ClCompile Include="..\..\libraries\libldap\ppolicy.c" />
 +    <ClCompile Include="..\..\libraries\libldap\print.c" />
++    <ClCompile Include="..\..\libraries\libldap\pserchctrl.c" />
++    <ClCompile Include="..\..\libraries\libldap\rdwr.c" />
 +    <ClCompile Include="..\..\libraries\libldap\references.c" />
 +    <ClCompile Include="..\..\libraries\libldap\request.c" />
 +    <ClCompile Include="..\..\libraries\libldap\result.c" />
++    <ClCompile Include="..\..\libraries\libldap\rq.c" />
 +    <ClCompile Include="..\..\libraries\libldap\sasl.c" />
 +    <ClCompile Include="..\..\libraries\libldap\sbind.c" />
 +    <ClCompile Include="..\..\libraries\libldap\schema.c" />
@@ -4036,10 +4048,18 @@ index 0000000..7500a86
 +    <ClCompile Include="..\..\libraries\libldap\sortctrl.c" />
 +    <ClCompile Include="..\..\libraries\libldap\stctrl.c" />
 +    <ClCompile Include="..\..\libraries\libldap\string.c" />
++    <ClCompile Include="..\..\libraries\libldap\tavl.c" />
++    <ClCompile Include="..\..\libraries\libldap\testavl.c" />
++    <ClCompile Include="..\..\libraries\libldap\thr_debug.c" />
++    <ClCompile Include="..\..\libraries\libldap\thr_nt.c" />
++    <ClCompile Include="..\..\libraries\libldap\thr_pth.c" />
++    <ClCompile Include="..\..\libraries\libldap\thr_posix.c" />
++    <ClCompile Include="..\..\libraries\libldap\thr_thr.c" />
++    <ClCompile Include="..\..\libraries\libldap\threads.c" />
++    <ClCompile Include="..\..\libraries\libldap\tpool.c" />
 +    <ClCompile Include="..\..\libraries\libldap\t61.c" />
 +    <ClCompile Include="..\..\libraries\libldap\tls2.c" />
 +    <ClCompile Include="..\..\libraries\libldap\tls_g.c" />
-+    <ClCompile Include="..\..\libraries\libldap\tls_m.c" />
 +    <ClCompile Include="..\..\libraries\libldap\tls_o.c" />
 +    <ClCompile Include="..\..\libraries\libldap\turn.c" />
 +    <ClCompile Include="..\..\libraries\libldap\txn.c" />
@@ -4049,653 +4069,13 @@ index 0000000..7500a86
 +    <ClCompile Include="..\..\libraries\libldap\utf-8-conv.c" />
 +    <ClCompile Include="..\..\libraries\libldap\utf-8.c" />
 +    <ClCompile Include="..\..\libraries\libldap\util-int.c" />
++    <ClCompile Include="..\..\libraries\libldap\vc.c" />
 +    <ClCompile Include="..\..\libraries\libldap\vlvctrl.c" />
 +    <ClCompile Include="..\..\libraries\libldap\whoami.c" />
 +  </ItemGroup>
 +  <ItemGroup>
 +    <ClInclude Include="..\..\libraries\libldap\ldap-int.h" />
 +    <ClInclude Include="..\..\libraries\libldap\ldap-tls.h" />
-+  </ItemGroup>
-+  <ItemGroup>
-+    <None Include="..\..\libraries\libldap\ldap.conf" />
-+  </ItemGroup>
-+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-+  <ImportGroup Label="ExtensionTargets">
-+  </ImportGroup>
-+</Project>
-\ No newline at end of file
-diff --git a/win32/vc17/libldap_r.vcxproj b/win32/vc17/libldap_r.vcxproj
-new file mode 100644
-index 0000000..c1383bd
---- /dev/null
-+++ b/win32/vc17/libldap_r.vcxproj
-@@ -0,0 +1,634 @@
-+﻿<?xml version="1.0" encoding="utf-8"?>
-+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-+  <ItemGroup Label="ProjectConfigurations">
-+    <ProjectConfiguration Include="Debug|ARM64">
-+      <Configuration>Debug</Configuration>
-+      <Platform>ARM64</Platform>
-+    </ProjectConfiguration>
-+    <ProjectConfiguration Include="Debug|Win32">
-+      <Configuration>Debug</Configuration>
-+      <Platform>Win32</Platform>
-+    </ProjectConfiguration>
-+    <ProjectConfiguration Include="Debug|x64">
-+      <Configuration>Debug</Configuration>
-+      <Platform>x64</Platform>
-+    </ProjectConfiguration>
-+    <ProjectConfiguration Include="Release|ARM64">
-+      <Configuration>Release</Configuration>
-+      <Platform>ARM64</Platform>
-+    </ProjectConfiguration>
-+    <ProjectConfiguration Include="Release|Win32">
-+      <Configuration>Release</Configuration>
-+      <Platform>Win32</Platform>
-+    </ProjectConfiguration>
-+    <ProjectConfiguration Include="Release|x64">
-+      <Configuration>Release</Configuration>
-+      <Platform>x64</Platform>
-+    </ProjectConfiguration>
-+    <ProjectConfiguration Include="Single Debug|ARM64">
-+      <Configuration>Single Debug</Configuration>
-+      <Platform>ARM64</Platform>
-+    </ProjectConfiguration>
-+    <ProjectConfiguration Include="Single Debug|Win32">
-+      <Configuration>Single Debug</Configuration>
-+      <Platform>Win32</Platform>
-+    </ProjectConfiguration>
-+    <ProjectConfiguration Include="Single Debug|x64">
-+      <Configuration>Single Debug</Configuration>
-+      <Platform>x64</Platform>
-+    </ProjectConfiguration>
-+    <ProjectConfiguration Include="Single Release|ARM64">
-+      <Configuration>Single Release</Configuration>
-+      <Platform>ARM64</Platform>
-+    </ProjectConfiguration>
-+    <ProjectConfiguration Include="Single Release|Win32">
-+      <Configuration>Single Release</Configuration>
-+      <Platform>Win32</Platform>
-+    </ProjectConfiguration>
-+    <ProjectConfiguration Include="Single Release|x64">
-+      <Configuration>Single Release</Configuration>
-+      <Platform>x64</Platform>
-+    </ProjectConfiguration>
-+  </ItemGroup>
-+  <PropertyGroup Label="Globals">
-+    <ProjectGuid>{D1D63406-97FB-43D9-A022-6B19B19A52EA}</ProjectGuid>
-+    <RootNamespace>libldap_r</RootNamespace>
-+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-+  </PropertyGroup>
-+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Single Debug|Win32'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Single Release|Win32'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Single Debug|x64'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Single Debug|ARM64'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Single Release|x64'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Single Release|ARM64'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="Configuration">
-+    <ConfigurationType>StaticLibrary</ConfigurationType>
-+    <UseOfMfc>false</UseOfMfc>
-+    <PlatformToolset>v143</PlatformToolset>
-+  </PropertyGroup>
-+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-+  <ImportGroup Label="ExtensionSettings">
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Single Debug|Win32'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Single Release|Win32'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Single Debug|x64'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Single Debug|ARM64'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Single Release|x64'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Single Release|ARM64'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'" Label="PropertySheets">
-+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
-+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
-+  </ImportGroup>
-+  <PropertyGroup Label="UserMacros" />
-+  <PropertyGroup>
-+    <_ProjectFileVersion>10.0.40219.1</_ProjectFileVersion>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\..\Debug\</OutDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\..\Debug\libldap_r\</IntDir>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</OutDir>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(Platform)\$(Configuration)\</OutDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">$(Platform)\$(Configuration)\</IntDir>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Single Release|Win32'">.\..\..\SRelease\</OutDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Single Release|Win32'">.\..\..\SRelease\libldap_r\</IntDir>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Single Release|x64'">$(Platform)\$(Configuration)\</OutDir>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Single Release|ARM64'">$(Platform)\$(Configuration)\</OutDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Single Release|x64'">$(Platform)\$(Configuration)\</IntDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Single Release|ARM64'">$(Platform)\$(Configuration)\</IntDir>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\..\Release\</OutDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\..\Release\libldap_r\</IntDir>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</OutDir>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(Platform)\$(Configuration)\</OutDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\</IntDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">$(Platform)\$(Configuration)\</IntDir>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Single Debug|Win32'">.\..\..\SDebug\</OutDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Single Debug|Win32'">.\..\..\SDebug\libldap_r\</IntDir>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Single Debug|x64'">$(Platform)\$(Configuration)\</OutDir>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Single Debug|ARM64'">$(Platform)\$(Configuration)\</OutDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Single Debug|x64'">$(Platform)\$(Configuration)\</IntDir>
-+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Single Debug|ARM64'">$(Platform)\$(Configuration)\</IntDir>
-+  </PropertyGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-+    <ClCompile>
-+      <Optimization>Disabled</Optimization>
-+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>_DEBUG;LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-+      <PrecompiledHeaderOutputFile>.\..\..\Debug\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\Debug\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\Debug\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\Debug\libldap_r/</ProgramDataBaseFileName>
-+      <BrowseInformation>true</BrowseInformation>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\Debug\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\Debug/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-+    <Midl>
-+      <TargetEnvironment>X64</TargetEnvironment>
-+    </Midl>
-+    <ClCompile>
-+      <Optimization>Disabled</Optimization>
-+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>_DEBUG;LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-+      <PrecompiledHeaderOutputFile>.\..\..\Debug\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\Debug\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\Debug\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\Debug\libldap_r/</ProgramDataBaseFileName>
-+      <BrowseInformation>true</BrowseInformation>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\Debug\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\Debug/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">
-+    <Midl />
-+    <ClCompile>
-+      <Optimization>Disabled</Optimization>
-+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>_DEBUG;LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-+      <PrecompiledHeaderOutputFile>.\..\..\Debug\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\Debug\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\Debug\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\Debug\libldap_r/</ProgramDataBaseFileName>
-+      <BrowseInformation>true</BrowseInformation>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\Debug\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\Debug/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Single Release|Win32'">
-+    <ClCompile>
-+      <Optimization>MaxSpeed</Optimization>
-+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <StringPooling>true</StringPooling>
-+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-+      <FunctionLevelLinking>true</FunctionLevelLinking>
-+      <PrecompiledHeaderOutputFile>.\..\..\SRelease\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\SRelease\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\SRelease\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\SRelease\libldap_r/</ProgramDataBaseFileName>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\SRelease\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\SRelease/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Single Release|x64'">
-+    <Midl>
-+      <TargetEnvironment>X64</TargetEnvironment>
-+    </Midl>
-+    <ClCompile>
-+      <Optimization>MaxSpeed</Optimization>
-+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <StringPooling>true</StringPooling>
-+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-+      <FunctionLevelLinking>true</FunctionLevelLinking>
-+      <PrecompiledHeaderOutputFile>.\..\..\SRelease\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\SRelease\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\SRelease\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\SRelease\libldap_r/</ProgramDataBaseFileName>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\SRelease\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\SRelease/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Single Release|ARM64'">
-+    <Midl />
-+    <ClCompile>
-+      <Optimization>MaxSpeed</Optimization>
-+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <StringPooling>true</StringPooling>
-+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-+      <FunctionLevelLinking>true</FunctionLevelLinking>
-+      <PrecompiledHeaderOutputFile>.\..\..\SRelease\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\SRelease\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\SRelease\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\SRelease\libldap_r/</ProgramDataBaseFileName>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\SRelease\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\SRelease/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-+    <ClCompile>
-+      <Optimization>MaxSpeed</Optimization>
-+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-+      <AdditionalIncludeDirectories>..\..\include;..\..\\libraries\libldap;%(AdditionalIncludeDirectories);X:\inclib-vc16-x32</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <StringPooling>true</StringPooling>
-+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-+      <FunctionLevelLinking>true</FunctionLevelLinking>
-+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-+      <PrecompiledHeaderOutputFile>.\..\..\Release\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\Release\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\Release\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\Release\libldap_r/</ProgramDataBaseFileName>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\Release\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\Release/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-+    <Midl>
-+      <TargetEnvironment>X64</TargetEnvironment>
-+    </Midl>
-+    <ClCompile>
-+      <Optimization>MaxSpeed</Optimization>
-+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-+      <AdditionalIncludeDirectories>..\..\include;..\..\\libraries\libldap;%(AdditionalIncludeDirectories);X:\inclib-vc16-x64</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <StringPooling>true</StringPooling>
-+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-+      <FunctionLevelLinking>true</FunctionLevelLinking>
-+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-+      <PrecompiledHeaderOutputFile>.\..\..\Release\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\Release\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\Release\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\Release\libldap_r/</ProgramDataBaseFileName>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\Release\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\Release/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">
-+    <Midl />
-+    <ClCompile>
-+      <Optimization>MaxSpeed</Optimization>
-+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
-+      <AdditionalIncludeDirectories>..\..\include;..\..\\libraries\libldap;%(AdditionalIncludeDirectories);</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WIN32_WINNT=0x0400;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <StringPooling>true</StringPooling>
-+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-+      <FunctionLevelLinking>true</FunctionLevelLinking>
-+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
-+      <PrecompiledHeaderOutputFile>.\..\..\Release\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\Release\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\Release\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\Release\libldap_r/</ProgramDataBaseFileName>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\Release\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\Release/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Single Debug|Win32'">
-+    <ClCompile>
-+      <Optimization>Disabled</Optimization>
-+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>_DEBUG;LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-+      <PrecompiledHeaderOutputFile>.\..\..\SDebug\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\SDebug\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\SDebug\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\SDebug\libldap_r/</ProgramDataBaseFileName>
-+      <BrowseInformation>true</BrowseInformation>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\SDebug\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\SDebug/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Single Debug|x64'">
-+    <Midl>
-+      <TargetEnvironment>X64</TargetEnvironment>
-+    </Midl>
-+    <ClCompile>
-+      <Optimization>Disabled</Optimization>
-+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>_DEBUG;LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-+      <PrecompiledHeaderOutputFile>.\..\..\SDebug\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\SDebug\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\SDebug\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\SDebug\libldap_r/</ProgramDataBaseFileName>
-+      <BrowseInformation>true</BrowseInformation>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\SDebug\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\SDebug/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Single Debug|ARM64'">
-+    <Midl />
-+    <ClCompile>
-+      <Optimization>Disabled</Optimization>
-+      <AdditionalIncludeDirectories>..\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-+      <PreprocessorDefinitions>_DEBUG;LDAP_R_COMPILE;WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-+      <PrecompiledHeaderOutputFile>.\..\..\SDebug\libldap_r/libldap_r.pch</PrecompiledHeaderOutputFile>
-+      <AssemblerListingLocation>.\..\..\SDebug\libldap_r/</AssemblerListingLocation>
-+      <ObjectFileName>.\..\..\SDebug\libldap_r/</ObjectFileName>
-+      <ProgramDataBaseFileName>.\..\..\SDebug\libldap_r/</ProgramDataBaseFileName>
-+      <BrowseInformation>true</BrowseInformation>
-+      <WarningLevel>Level3</WarningLevel>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <DebugInformationFormat>OldStyle</DebugInformationFormat>
-+    </ClCompile>
-+    <ResourceCompile>
-+      <Culture>0x0409</Culture>
-+    </ResourceCompile>
-+    <Lib>
-+      <OutputFile>..\..\SDebug\oldap_r.lib</OutputFile>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+    </Lib>
-+    <Bscmake>
-+      <SuppressStartupBanner>true</SuppressStartupBanner>
-+      <OutputFile>.\..\..\SDebug/libldap_r.bsc</OutputFile>
-+    </Bscmake>
-+  </ItemDefinitionGroup>
-+  <ItemGroup>
-+    <ClCompile Include="..\..\libraries\libldap\abandon.c" />
-+    <ClCompile Include="..\..\libraries\libldap\add.c" />
-+    <ClCompile Include="..\..\libraries\libldap\addentry.c" />
-+    <ClCompile Include="..\..\libraries\libldap\assertion.c" />
-+    <ClCompile Include="..\..\libraries\libldap\bind.c" />
-+    <ClCompile Include="..\..\libraries\libldap\cancel.c" />
-+    <ClCompile Include="..\..\libraries\libldap\charray.c" />
-+    <ClCompile Include="..\..\libraries\libldap\compare.c" />
-+    <ClCompile Include="..\..\libraries\libldap\controls.c" />
-+    <ClCompile Include="..\..\libraries\libldap\cyrus.c" />
-+    <ClCompile Include="..\..\libraries\libldap\dds.c" />
-+    <ClCompile Include="..\..\libraries\libldap\delete.c" />
-+    <ClCompile Include="..\..\libraries\libldap\deref.c" />
-+    <ClCompile Include="..\..\libraries\libldap\dnssrv.c" />
-+    <ClCompile Include="..\..\libraries\libldap\error.c" />
-+    <ClCompile Include="..\..\libraries\libldap\extended.c" />
-+    <ClCompile Include="..\..\libraries\libldap\filter.c" />
-+    <ClCompile Include="..\..\libraries\libldap\free.c" />
-+    <ClCompile Include="..\..\libraries\libldap\getattr.c" />
-+    <ClCompile Include="..\..\libraries\libldap\getdn.c" />
-+    <ClCompile Include="..\..\libraries\libldap\getentry.c" />
-+    <ClCompile Include="..\..\libraries\libldap\getvalues.c" />
-+    <ClCompile Include="..\..\libraries\libldap\gssapi.c" />
-+    <ClCompile Include="..\..\libraries\libldap\init.c" />
-+    <ClCompile Include="..\..\libraries\libldap\ldap_sync.c" />
-+    <ClCompile Include="..\..\libraries\libldap\messages.c" />
-+    <ClCompile Include="..\..\libraries\libldap\modify.c" />
-+    <ClCompile Include="..\..\libraries\libldap\modrdn.c" />
-+    <ClCompile Include="..\..\libraries\libldap\open.c" />
-+    <ClCompile Include="..\..\libraries\libldap\options.c" />
-+    <ClCompile Include="..\..\libraries\libldap\os-ip.c" />
-+    <ClCompile Include="..\..\libraries\libldap\os-local.c" />
-+    <ClCompile Include="..\..\libraries\libldap\pagectrl.c" />
-+    <ClCompile Include="..\..\libraries\libldap\passwd.c" />
-+    <ClCompile Include="..\..\libraries\libldap\ppolicy.c" />
-+    <ClCompile Include="..\..\libraries\libldap\print.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\rdwr.c" />
-+    <ClCompile Include="..\..\libraries\libldap\references.c" />
-+    <ClCompile Include="..\..\libraries\libldap\request.c" />
-+    <ClCompile Include="..\..\libraries\libldap\result.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\rmutex.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\rq.c" />
-+    <ClCompile Include="..\..\libraries\libldap\sasl.c" />
-+    <ClCompile Include="..\..\libraries\libldap\sbind.c" />
-+    <ClCompile Include="..\..\libraries\libldap\schema.c" />
-+    <ClCompile Include="..\..\libraries\libldap\search.c" />
-+    <ClCompile Include="..\..\libraries\libldap\sort.c" />
-+    <ClCompile Include="..\..\libraries\libldap\sortctrl.c" />
-+    <ClCompile Include="..\..\libraries\libldap\stctrl.c" />
-+    <ClCompile Include="..\..\libraries\libldap\string.c" />
-+    <ClCompile Include="..\..\libraries\libldap\t61.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\thr_cthreads.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\thr_debug.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\thr_nt.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\thr_posix.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\thr_pth.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\thr_stub.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\thr_thr.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\threads.c" />
-+    <ClCompile Include="..\..\libraries\libldap\tls2.c" />
-+    <ClCompile Include="..\..\libraries\libldap\tls_g.c" />
-+    <ClCompile Include="..\..\libraries\libldap\tls_m.c" />
-+    <ClCompile Include="..\..\libraries\libldap\tls_o.c" />
-+    <ClCompile Include="..\..\libraries\libldap_r\tpool.c" />
-+    <ClCompile Include="..\..\libraries\libldap\turn.c" />
-+    <ClCompile Include="..\..\libraries\libldap\txn.c" />
-+    <ClCompile Include="..\..\libraries\libldap\unbind.c" />
-+    <ClCompile Include="..\..\libraries\libldap\url.c" />
-+    <ClCompile Include="..\..\libraries\libldap\urltest.c" />
-+    <ClCompile Include="..\..\libraries\libldap\utf-8-conv.c" />
-+    <ClCompile Include="..\..\libraries\libldap\utf-8.c" />
-+    <ClCompile Include="..\..\libraries\libldap\util-int.c" />
-+    <ClCompile Include="..\..\libraries\libldap\vlvctrl.c" />
-+    <ClCompile Include="..\..\libraries\libldap\whoami.c" />
-+  </ItemGroup>
-+  <ItemGroup>
-+    <ClInclude Include="..\..\libraries\libldap\ldap-int.h" />
-+    <ClInclude Include="..\..\libraries\libldap\ldap-tls.h" />
-+    <ClInclude Include="..\..\libraries\libldap_r\ldap_thr_debug.h" />
 +  </ItemGroup>
 +  <ItemGroup>
 +    <None Include="..\..\libraries\libldap\ldap.conf" />
