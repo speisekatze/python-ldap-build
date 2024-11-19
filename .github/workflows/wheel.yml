@@ -40,7 +40,7 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@2.21.3
+      - uses: pypa/cibuildwheel@2.21.0
         env:
           CIBW_ARCHS: AMD64
           CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
@@ -78,7 +78,7 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v2.17.0
+      - uses: pypa/cibuildwheel@v2.21.0
         env:
           CIBW_ARCHS: x86
           CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
