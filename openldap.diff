@@ -1,3 +1,16 @@
+diff --git a/libraries/liblber/stdio.c b/libraries/liblber/stdio.c
+index 3346b6f826..268e7dde2a 100644
+--- a/libraries/liblber/stdio.c
++++ b/libraries/liblber/stdio.c
+@@ -20,7 +20,7 @@
+ #include <ac/string.h>
+ #include <ac/ctype.h>
+ #include <lutil.h>
+-#include <unistd.h>
++
+ 
+ #if !defined(HAVE_VSNPRINTF) && !defined(HAVE_EBCDIC)
+ /* Write at most n characters to the buffer in str, return the
 diff --git a/include/ac/time.h b/include/ac/time.h
 index cd75a6f05c..e26498e9cf 100644
 --- a/include/ac/time.h
