@@ -5,7 +5,7 @@ on:
 
 env:
   OPENSSL_VER: openssl-3.4.0
-  OPENLDAP_VER: openldap-2.6.8
+  OPENLDAP_VER: openldap-2.4.59
   PYTHONLDAP_VER: python-ldap-3.4.4
   CIBW_TEST_COMMAND: python -c"import ldap;print(ldap.__version__)"
   MSBUILDTREATHIGHERTOOLSVERSIONASCURRENT: 1
