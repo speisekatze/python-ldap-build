@@ -1691,11 +1691,10 @@ index c080b62..32c42c2 100644
  		if ( isprint( (unsigned char) data[i] )) {
 diff --git a/win32/vc17/liblber.sln b/win32/vc17/liblber.sln
 new file mode 100644
-index 0000000000..78c7f5a9ea
+index 0000000000..5c692d2773
 --- /dev/null
 +++ b/win32/vc17/liblber.sln
-@@ -0,0 +1,147 @@
-+´╗┐
+@@ -0,0 +1,146 @@
 +Microsoft Visual Studio Solution File, Format Version 12.00
 +# Visual Studio Version 17
 +VisualStudioVersion = 17.4.33027.239
@@ -1844,11 +1843,11 @@ index 0000000000..78c7f5a9ea
 +EndGlobal
 diff --git a/win32/vc17/liblber.vcxproj b/win32/vc17/liblber.vcxproj
 new file mode 100644
-index 0000000000..8788cd838a
+index 0000000000..059ebe7978
 --- /dev/null
 +++ b/win32/vc17/liblber.vcxproj
 @@ -0,0 +1,1286 @@
-+´╗┐<?xml version="1.0" encoding="utf-8"?>
++<?xml version="1.0" encoding="utf-8"?>
 +<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup Label="ProjectConfigurations">
 +    <ProjectConfiguration Include="Debug|ARM64">
@@ -3137,11 +3136,11 @@ index 0000000000..8788cd838a
 \ No newline at end of file
 diff --git a/win32/vc17/libldap.vcxproj b/win32/vc17/libldap.vcxproj
 new file mode 100644
-index 0000000000..66face09da
+index 0000000000..b5e742392c
 --- /dev/null
 +++ b/win32/vc17/libldap.vcxproj
 @@ -0,0 +1,943 @@
-+´╗┐<?xml version="1.0" encoding="utf-8"?>
++<?xml version="1.0" encoding="utf-8"?>
 +<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup Label="ProjectConfigurations">
 +    <ProjectConfiguration Include="Debug|ARM64">
