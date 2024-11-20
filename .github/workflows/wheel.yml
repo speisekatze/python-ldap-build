@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  OPENSSL_VER: openssl-3.4.0
+  OPENSSL_VER: openssl-3.2.1
   OPENLDAP_VER: openldap-2.4.59
   PYTHONLDAP_VER: python-ldap-3.4.4
   CIBW_TEST_COMMAND: python -c"import ldap;print(ldap.__version__)"
@@ -13,16 +13,15 @@ env:
 jobs:
   build_amd64:
     name: Build AMD64 wheels
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os[0] }}
     strategy:
       matrix:
         os:
-          - windows-2022
+          - [windows-2022, win_amd64]
         python:
-          - cp310
+          - cp313
           - cp311
           - cp312
-          - cp313
     env:
       VS_PLATFORM: x64
       OPENSSL_CONFIG: VC-WIN64A-masm
@@ -40,26 +39,25 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v2.21.3
+      - uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_ARCHS: AMD64
-          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os }}
+          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.python }}-${{ matrix.os }}-wheel
+          name: ${{ matrix.python }}-${{ matrix.os[1] }}-wheel
           path: ./wheelhouse/*.whl
   build_x86:
     name: Build x86 wheels
-    runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os[0] }}
     strategy:
       matrix:
         os:
-          - windows-2022
+          - [windows-2022, win32]
         python:
-          - cp310
+          - cp313
           - cp311
           - cp312
-          - cp313
     env:
       VS_PLATFORM: Win32
       OPENSSL_CONFIG: VC-WIN32
@@ -78,13 +76,13 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v2.21.3
+      - uses: pypa/cibuildwheel@v2.17.0
         env:
           CIBW_ARCHS: x86
-          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os }}
+          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.python }}-${{ matrix.os }}-wheel
+          name: ${{ matrix.python }}-${{ matrix.os[1] }}-wheel
           path: ./wheelhouse/*.whl
   upload_assets:
     name: Upload release assets
@@ -92,6 +90,7 @@ jobs:
     needs:
       - build_amd64
       - build_x86
+      # - build_arm64
     steps:
       - name: Generate release name
         id: release-name
