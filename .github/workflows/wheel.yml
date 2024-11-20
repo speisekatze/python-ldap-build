@@ -13,11 +13,11 @@ env:
 jobs:
   build_amd64:
     name: Build AMD64 wheels
-    runs-on: ${{ matrix.os[0] }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
-          - [windows-latest, win_amd64]
+          - windows-latest
         python:
           - cp310
           - cp311
@@ -40,21 +40,21 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@2.21
+      - uses: pypa/cibuildwheel@v2.21.3
         env:
           CIBW_ARCHS: AMD64
-          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
+          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os }}
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.python }}-${{ matrix.os[1] }}-wheel
+          name: ${{ matrix.python }}-${{ matrix.os }}-wheel
           path: ./wheelhouse/*.whl
   build_x86:
     name: Build x86 wheels
-    runs-on: ${{ matrix.os[0] }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os:
-          - [windows-latest, win32]
+          - windows-latest
         python:
           - cp310
           - cp311
@@ -78,13 +78,13 @@ jobs:
         shell: cmd
       - run: build_python-ldap.cmd
         shell: cmd
-      - uses: pypa/cibuildwheel@v2.21
+      - uses: pypa/cibuildwheel@v2.21.3
         env:
           CIBW_ARCHS: x86
-          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os[1] }}
+          CIBW_BUILD: ${{ matrix.python }}-${{ matrix.os }}
       - uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.python }}-${{ matrix.os[1] }}-wheel
+          name: ${{ matrix.python }}-${{ matrix.os }}-wheel
           path: ./wheelhouse/*.whl
   upload_assets:
     name: Upload release assets
@@ -92,7 +92,6 @@ jobs:
     needs:
       - build_amd64
       - build_x86
-      # - build_arm64
     steps:
       - name: Generate release name
         id: release-name
@@ -110,30 +109,3 @@ jobs:
           name: ${{ steps.release-name.outputs.RELEASE_NAME }}
           tag: main
           artifacts: ${{ steps.fetch-assets.outputs.download-path }}/*.whl
-  # ARM64 wheel is broken
-  # build_arm64:
-  #  name: Build ARM64 wheels
-  #  runs-on: ${{ matrix.os }}
-  #  strategy:
-  #    matrix:
-  #      os: [windows-2022]
-  #  env:
-  #    VS_PLATFORM: ARM64
-  #    OPENSSL_CONFIG: VC-WIN64-ARM
-  #  steps:
-  #    - uses: actions/checkout@v4
-  #    - uses: microsoft/setup-msbuild@v1.1
-  #      with:
-  #        msbuild-architecture: arm64
-  #    - uses: ilammy/msvc-dev-cmd@v1
-  #      with:
-  #        arch: amd64_arm64
-  #    - run: build.cmd
-  #      shell: cmd
-  #    - uses: pypa/cibuildwheel@v2.16.2
-  #      env:
-  #        CIBW_SKIP: "pp* cp36* cp37* cp38* cp39* cp310*"
-  #        CIBW_ARCHS_WINDOWS: ARM64
-  #    - uses: actions/upload-artifact@v3
-  #      with:
-  #        path: ./wheelhouse/*.whl
